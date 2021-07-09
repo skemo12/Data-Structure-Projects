@@ -1,0 +1,61 @@
+Tema 1 SD -- Paunoiu Darius Alexandru -- 312CD -- Readme
+
+    Pentru rezolvarea temei, am incercat in cel mai optim mod, sa structurez
+si modularizez bucatile de cod astfel incat sa fie usor de inteles, asadar am
+definit destul de multe functii. Fiecare functie are un comentariu care explica 
+rolul ei.
+    Pentru implemantarea pachetului de carti am folosit o structura cu numele 
+Pack, iar un pointer la un element de tip Pack este de tipul APack. In aceeasta
+structura am retinut urmatoarele informatii : valoarea cartii (int), numele
+cartii (A,K,Q etc), culoarea (Spades, hearts etc), size care reprezinta
+dimensiunea pachetului (aceasta structura fiind folosita si pentru pachetul
+initial de carti cat si pentru pachetele jucatorilor) si adresa urmatoarei
+carti din pachet (adica adresa urmatorului element din lista simplu inlatuita).
+    Toate functiile au fost restranse sub 100 de linii pentru a usura citirea 
+si intelegerea codului.
+
+        -- Amestecarea pachetului --
+    Pentru amestecarea pachetului am folosit un switch pentru a apela functia
+corespunzatoare tipului de amestecare din fisier, acesta fiind codificat dupa 
+a 3-a litera a cuvantului (Inversare -> v, Intercalare -> t, Mongean -> n, 
+NPiles -> i). Pentru situatia cand task-ul este cel de amestecare, se va 
+folosi functia afis, care afiseaza un pachet facand niste verificari pentru 
+pastrarea integritatii solutiei.
+
+        -- Jocurile de carti --
+    Functia corespunzatoare jocurilor de carti au nume sugestiv si primesc
+ca parametrii pachetul amestecat si fisierul de output. Ele simuleaza jocul,
+afiseaza castigatorul si elibereaza toata memoria utilizata. Structural Toate
+functiile ce simuleaza jocuri sunt la fel, difera doar jocul in sine.
+
+        -- Razboi --
+    Pentru razboi, parcurg jocul pas cu pas, modificand pachetul fiecarui
+jucator cand este cazul. In caz de razboi, se folosesc doi vectori de 
+pointeri, pentru a adauga usor si corect in mod invers cartile in pachetul
+jucatorului al unei lupte de tip razboi. Functia findWarSize va determina
+cate carti vor fi jucate de fiecare jucator in razboi. List1 retine cartile
+de razboi pentru jucatorul 1, List2 facand acelasi lucru pentru list2.
+Variabila contor tine cont de tura jocului, si in caz de joc prea lung,
+adica mai mare de 100 de runde, se va calcula castigatorul in modul 
+corespunzator in functia decideWinnerWar.
+
+        -- Rolling Stones --
+    Pentru rolling stones, se apeleaza functia searchCardToPlay pentru a gasi
+prima carte ce un jucator o poate pune pe masa. Daca aceasta nu are ce carte
+se joaca, el ia in pachet toate cartile de pe masa, se cauta o carte ce o poate
+juca si se pune pe masa. Variabila round tine cont de ce carte trebuie jucata
+in tura respectiva, fiind indicele corespunzator sirului de caractere "shcd",
+regasit in functia searchCardToPlay.
+
+        -- Scarabeii Egipteni --
+    Pentru scarabeii egipteni, fiecare jucator pune o carte pe masa. Variabila 
+scarab tine cont daca inainte s-a jucat o carte de tip scarabeu, caz in care
+se vor respecta regurile conforme. Variabila scarabei retine toate cartile de
+tip scarabei. Castigator este jucatorul ce face 52 de carti. Bucla pentru joc
+continua pana cand unul din jucatori atinge 52 de carti in pachet. La acesta 
+joc m-am folosit de functia predefinita continue pentru a sari peste jucatori
+exclusi din joc (adica cei ce au ramas fara carti).
+
+        -- Multumesc pentru atentia acordata rezolvata temei --
+        -- Sper ca ti-a placut modul de implementare al temei! --
+          -- Ma bucur de orice sugestii ai avea sa-mi dai! --

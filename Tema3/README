@@ -1,0 +1,31 @@
+-- Tema 3 SD -- Paunoiu Darius Alexandru -- 312CD -- Readme
+
+    -- Structura Grafului --
+    Graful este reprezenta prin liste de adiacente, dar are si un element de
+tipul char **names, care retine numele tuturor nodurilor. Cu functia getidx
+se poate obtine indicele un graf pentru un element de tipul char *.
+
+    -- Extra notes --
+    Am considerat ca nicio linie nu este mai lunga de o constanta MAX_SIZE,
+egala cu 1024 de caractere. Lungimea maxima a unui nume al unui nod am
+considerat-o 2 * MAX_SIZE / V, unde V este egal cu numarul de noduri din graf.
+
+    -- Cerinta 1 --
+    Pentru cerinta 1 rezolvarea a fost in principal clasica, se citeste graful
+adaugandu-se arcele dupa cum se citesc. Pentru verificarea existentei 
+ciclurilor am folosit o parcugere DFS. Practic parcurg tot graful cautand
+cicluri.
+
+    -- Cerinta 2 --
+    Pentru cerinta 2, datele de intrare au fost citite cu ajutorul functiei
+strtok, citind o linie o data si separand in tokens. Functia cerinta 2 rezolva
+aceasta cerinta si apeleaza ca functie principala functia checkDepedency.
+Functia checkDepedency creeaza un vector allNodes, care este 1 pentru un nod ce
+trebuie pastrat, si 0 pentru unul ce trebuie sters. Functia creeaza o clona a 
+grafului curent (ne trebuie graful curent pentru fiecare verifacare de 
+depedenta). Ea transforma clona in graful necesar si trateaza cazul de parinti
+multiplii. Apoi voi creea un alt graf, de data aceasta neorientat din care voi
+sterge nodurile O1 ... On.
+    Functia searchPath cauta o cale intre cele 2 noduri A si B care ne 
+intereseaza, si schimba valoarea variabile declara dinamic ok primita ca 
+parametru din 0 in 1 daca a gasit una.

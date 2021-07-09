@@ -1,0 +1,107 @@
+-- Tema 2 SD -- Paunoiu Darius Alexandru -- 312CD -- Readme
+
+    Functiile care nu au fost in document si au fost definite de mine sunt:
+        - searchManager -> Cauta un nod (nume primit ca sir de caractere) 
+            in tree
+
+        - sortOneEmployee -> Sorteaza doar ultimul angajat din lista (folosita
+        pentru adaugarile la final de lista)
+
+        - sortTreeList -> Sorteaza un vector de angajati
+
+        - getPositionOfEmployee -> returneaza pozitia angajatului in vector
+
+        - removeEmployee -> Scoate un angajat dintr-o echipa, nu dezaloca
+        memoria lui, dar realoca memoria pentru vectorul teams
+
+        - freeNode -> Elibereaza memoria unui nod de tip Tree
+
+        - moveTeam -> Muta o echipa in ierarhie, am definit inca o functie de
+            acest tip deoarece am folosit o si in alte functii, si m-a ajutat
+            sa am direct parametrii de tip Tree in loc de char pe care ar fi 
+            trebuit sa ii convertesc. Aceasta functie este folosita si in 
+            functia initiala move_team
+
+        - moveEmployee -> Muta un angajat in ierarhie. Analogia moveEmployee si
+        move_employee este aceeasi ca cea de la moveTeam si move_team
+
+        - findLevelEmployees -> Construieste un vector output cu 
+            toti angajatii de pe un nivel
+
+        - findAllSubEmployees ->  Construieste un vector outputList 
+            cu toti angajatii de sub node
+
+        - getMaxNumberEmployees -> Gaseste numarul maxim de angajatii directi
+
+        - findManagersByEmployees -> Construieste vectorul output care contine 
+            toti managerii ce au numarul de angajati egal cu max
+
+        - preorder_print -> Functie ajutatoare pentru preorder_traversal, 
+            afiseaza toate nodurile din tree, dar nu afiseaza caracterul "\n"
+
+
+
+                ------ Cerinta 1 ------
+    
+        -- Hire --
+    Pentru functia hire, am alocat memorie unui nod, dupa care am tratat
+cazurile posibile: adaugam un nou root, adaugam intr-un manager cu echipa
+nula sau adaugam intr-o echipa deja existenta ce trebuie doar marita si 
+sortata.
+
+        -- Fire --
+    Pentru functia fire, identific nodul, mut toti angajatii nodului, 
+inclusiv echipelor lor, deci folosesc moveTeam. Apoi sterg nodul si 
+dezaloc memoria pentru el.
+
+        -- Promote --
+    Promovarea unui angajat nu este altceva decat mutarea lui cu un nivel
+mai sus. Verificam daca suntem in conditiile normale de promovare si 
+aplicam functia moveEmployee.
+
+        -- move_employee --
+    Functia converteste sirurile de caractere in elemente de tip Tree, apoi
+apeleaza moveEmployee.
+
+        -- move_team -- 
+    Analog move_employee, functia tranforma sirurile de caractere in
+elemente de tip Tree, dupa care apeleaza moveTeam.
+
+        -- fire_team --
+    Verificam daca elementul poate fi sters. Daca elementul nu are 
+angajati, atunci avem doar un simplu fire. Daca are angajati, scoatem
+elementul din vectorul de angajati, dupa care distrugem (eliberam memoria)
+pentru subcopacul acestuia.
+
+                ------ Cerinta 2 ------
+
+        -- get_employees_by_manager --
+    Se foloseste de findAllSubEmployees pentru a creea un vector cu toti
+angajatii ce trebuiesc afisati, ordoneaza vectorul in ordine alfabetica si
+il afiseaza.
+
+        -- get_employees_by_level --
+    Se foloseste de findLevelEmployees pentru a creea un vector cu toti
+angajatii ce trebuiesc afisati, ordoneaza vectorul in ordine alfabetica si
+il afiseaza.
+
+        -- get_best_manager --
+    Functia foloseste getMaxNumberEmployees, pentru a afla numarul maxim de
+angajatii al unui manager si findManagersByEmployees pentru a creea un vector
+cu toti angajatii ce trebuiesc afisati, ceea ce si face dupa ce il sorteaza.
+
+                ------ Cerinta 3 ------
+
+        -- reorganize --
+    Functia creeaza un vector format din toti managerii nodului ce urmeaza sa
+devina noul root. Realoca memoria vectorului teams noului root pentru a insera
+managerul lui ca angajat (singurul care are nevoie de angajat), sterge new root
+din old root, face modificarile de adrese necesare pentru restul ierarhiei.
+Dupa ce modifica radacina ca fiind noua radacina, returneaza noua ierarhie.
+
+-------------------------------------------------------------------------------
+    Unele variabile au fost folosite si numite in acel fel pentru a scurta
+dimensiunea unei linii (a nu depasi coloana 80)
+
+                -- Exit codes --
+    - 101 -> eroare de alocare, o functie a intors NULL dupa alocarea dinamica

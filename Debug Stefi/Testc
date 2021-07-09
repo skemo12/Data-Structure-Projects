@@ -1,0 +1,155 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct TreeNode {
+    char *name;                 // numele angajatului
+    int direct_employees_no;    // numarul de copii ai nodului curent
+    struct TreeNode **team;     // copiii nodului curent
+    struct TreeNode *manager;   // parintele nodului curent
+} TreeNode, *Tree;
+void preorder_print(Tree tree)
+{
+    if (tree->manager != NULL)
+    {
+        printf("%s-%s ",tree->name, tree->manager->name);
+    }
+    else
+    {
+        printf("%s ",tree->name);
+    }
+    for (int i = 0; i < tree->direct_employees_no; i++)
+    {
+        preorder_print(tree->team[i]);
+    }
+    
+}
+/* Parcurge ierarhia conform parcurgerii preordine.
+ *
+ * f: fisierul in care se va face afisarea
+ * tree: ierarhia existenta
+ */
+void preorder_traversal(Tree tree) {
+    
+    preorder_print(tree);
+    printf("\n");
+    
+    return;
+}
+void preorder_traversal2( Tree tree) 
+{
+    int nr = tree->direct_employees_no;
+    if(tree == NULL)
+        return;
+    if (tree->manager == NULL)
+            printf("%s ", tree->name);
+    for(int i = 0; i < nr; i++)
+    {       
+        if (tree->manager)
+        printf("%s-%s ", tree->name, tree->manager->name);
+        preorder_traversal2 (tree->team[i]);    
+    }
+    if (tree->manager == NULL)
+        printf("\n");
+}
+Tree searchManager (Tree tree, char *manager_name)
+{
+    //printf( "Nume %s numar %d\n",tree->name, tree->direct_employees_no);
+    if (strcmp(tree->name, manager_name) == 0)
+    {
+        return tree;
+    }
+    else
+    {    
+        Tree result;
+        for (int i = 0; i < tree->direct_employees_no; i++)
+        {
+            result = searchManager(tree->team[i], manager_name);
+            
+            if (result == NULL)
+            {
+                continue;
+            }
+            //printf("Indice %d \n",i);
+            if (strcmp(result->name, manager_name) == 0)
+            {
+                return result;
+            }
+        }
+        
+    }
+    return NULL;
+}
+Tree PointerToManager(Tree tree, char *manager_name)
+{
+    if (tree == NULL)
+        return NULL;
+    if (strcmp(tree->name, manager_name) == 0)
+        return tree;
+
+    for(int i = 0; i < tree->direct_employees_no; i++) 
+    {
+        Tree result = PointerToManager(tree->team[i], manager_name);
+        
+        if (tree == NULL)
+            {
+                continue;
+            }
+
+        if (strcmp(result->name, manager_name) == 0) 
+            return result;
+        
+        
+    }
+    return tree;
+}
+int main () {
+    Tree echipa = (Tree) calloc(1, sizeof(TreeNode));
+    Tree head = echipa;
+    echipa->team = (Tree *) calloc(5, sizeof(Tree));
+    echipa->direct_employees_no = 5;
+    echipa->name = "tata";
+    echipa->manager = NULL;
+    for (int i = 0; i < 5; i++)
+    {
+        echipa->team[i] = (Tree) calloc(1,sizeof(TreeNode));
+        echipa->team[i]->manager = echipa;
+        echipa->team[i]->direct_employees_no = 0;
+        char buffer[50];
+        int n = sprintf(buffer, "%d", i);
+        //printf("%s ",buffer);
+        echipa->team[i]->name = (char *) calloc(10,sizeof(char));
+        strcpy(echipa->team[i]->name, buffer);
+        /*if (strcmp(echipa->team[i]->name, "2") == 0)
+        {
+            printf("%s ",echipa->team[i]->name);
+        }*/
+        
+        
+        
+    }
+    Tree newManager = echipa->team[0];
+    newManager->team = (Tree *) calloc(5, sizeof(Tree));
+    newManager->direct_employees_no = 3;
+    int i = 0;
+        for (int j = 0; j < 3; j++)
+        {
+            newManager->team[j] = (Tree) calloc(1,sizeof(TreeNode));
+            newManager->team[j]->direct_employees_no = 0;
+            newManager->team[j]->manager = newManager;
+            char buffer[50];
+            int n = sprintf(buffer, "%d%d", i,j);
+            newManager->team[j]->name = (char *) calloc(10,sizeof(char));
+            strcpy(newManager->team[j]->name, buffer);
+            //printf("%d ",newManager->team[j]->direct_employees_no);
+        }
+        //printf("\n%d ",newManager->team[0]->direct_employees_no);
+    //Tree result = searchManager(head, "02");
+    //Tree result2 = PointerToManager(head, "02");
+    preorder_traversal2(head);
+    preorder_traversal(head);
+    
+    //printf("%s %s\n", result->name, result2->name);
+    //output*.out
+    return 0;
+}
